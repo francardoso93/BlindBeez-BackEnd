@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Schedule } from './schedule.entity';
 import { Repository, DeleteResult, Like, Raw, Between } from 'typeorm';
@@ -6,15 +6,22 @@ import { NewScheduleDto } from './new-schedule.dto';
 import moment = require('moment');
 import { ScheduleDto } from './schedule.dto';
 import { Moment } from 'moment';
+import { CompaniesService } from '../companies/companies.service';
 
 @Injectable()
 export class ScheduleService {
   constructor(
     @InjectRepository(Schedule)
-    private readonly scheduleRepository: Repository<Schedule>
+    private readonly scheduleRepository: Repository<Schedule>,
+    private readonly companiesService: CompaniesService,
   ) { }
 
   public async BulkCreateAvailableSchedules(newSchedule: NewScheduleDto) {
+    const company = this.companiesService.get(newSchedule.company?.id?.toString());
+    if (!company) {
+      throw new BadRequestException('CompanyId is not registered, please register company before schedule');
+    }
+
     const startDate = new Date(newSchedule.initialDate);
     let currentMoment = new Date(newSchedule.initialDate);
     const endDate = new Date(newSchedule.finalDate);
