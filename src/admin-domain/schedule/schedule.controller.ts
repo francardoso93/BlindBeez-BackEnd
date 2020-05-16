@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Post, Body, Put, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, HttpCode, Post, Body, Put, Param, Delete, Query, ValidationPipe, UsePipes } from '@nestjs/common';
 import { Schedule } from './schedule.entity';
 import { ScheduleService } from './schedule.service';
 import { NewScheduleDto } from './new-schedule.dto';
@@ -9,10 +9,8 @@ export class ScheduleController {
         private scheduleService: ScheduleService,
     ) { }
 
-    // TODO: Pipe validação de entrada
-    //Ou seja, o formulário do front vai usar o esquema do client-scheduler
-    //No endpoint de massoterapeutas vou precisar cadastrar as agendas deles para conseguir fazer esse cruzamento
     @Post()
+    @UsePipes(ValidationPipe)
     @HttpCode(201)
     async post(@Body() body: NewScheduleDto) {
         await this.scheduleService.BulkCreateAvailableSchedules(body);
