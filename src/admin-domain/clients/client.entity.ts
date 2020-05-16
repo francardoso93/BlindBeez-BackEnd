@@ -12,7 +12,10 @@ export class Client {
     @Column()
     email: string;
 
-    @ManyToOne(type => Company, Company => Company.clients)
+    @Column()
+    phone: string;
+
+    @ManyToOne(() => Company, company => company.clients)
     company?: Company;
 
 }

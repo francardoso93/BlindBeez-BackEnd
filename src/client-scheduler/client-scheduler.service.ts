@@ -30,6 +30,7 @@ export class ClientSchedulerService {
                     id: 0,
                     name: clientScheduler.name,
                     email: clientScheduler.email,
+                    phone: clientScheduler.phone,
                     // company: {
                     //     id: clientScheduler.companyId,
                     // },
