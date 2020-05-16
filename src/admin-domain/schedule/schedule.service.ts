@@ -17,7 +17,7 @@ export class ScheduleService {
   ) { }
 
   public async BulkCreateAvailableSchedules(newSchedule: NewScheduleDto) {
-    const company = this.companiesService.get(newSchedule.company?.id?.toString());
+    const company = await this.companiesService.get(newSchedule.company?.id?.toString());
     if (!company) {
       throw new BadRequestException('CompanyId is not registered, please register company before schedule');
     }
