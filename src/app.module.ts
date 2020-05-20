@@ -11,10 +11,10 @@ import { ContactModule } from './contact/contact.module';
 @Module({
   imports: [TypeOrmModule.forRoot({
     type: 'postgres',
-    host:  process.env.DB_HOST,
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE_NAME,
+    host:  process.env.DB_HOST ? process.env.DB_HOST : 'localhost',
+    username: process.env.DB_USERNAME ? process.env.DB_USERNAME : 'postgres',
+    password: process.env.DB_PASSWORD ? process.env.DB_PASSWORD : 'admin',
+    database: process.env.DB_DATABASE_NAME ? process.env.DB_DATABASE_NAME : 'blindbeez',
     port: 5432,
     entities: [__dirname + '/../**/**.entity.js'],
     synchronize: true,
