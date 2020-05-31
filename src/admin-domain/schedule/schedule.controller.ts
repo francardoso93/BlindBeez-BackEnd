@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Post, Body, Put, Param, Delete, Query, ValidationPipe, UsePipes } from '@nestjs/common';
+import { Controller, Get, HttpCode, Post, Body, Put, Param, Delete, Query, ValidationPipe, UsePipes, ParseIntPipe } from '@nestjs/common';
 import { Schedule } from './schedule.entity';
 import { ScheduleService } from './schedule.service';
 import { NewScheduleDto } from './new-schedule.dto';
@@ -18,8 +18,8 @@ export class ScheduleController {
 
     @Get()
     @HttpCode(200)
-    async list(@Query() params) {
-        return await this.scheduleService.list(params.onlyAvailableTime, params.date, params.companyId);
+    async list(@Query('onlyAvailableTime') onlyAvailableTime, @Query('date') date, @Query('companyId', ParseIntPipe) companyId) {
+        return await this.scheduleService.list(onlyAvailableTime, date, companyId);
     }
 
     @Get(':id')
