@@ -91,11 +91,9 @@ export class ScheduleService {
     scheduleList.map(a => {
       scheduleDtoList.push({
         id: a.id,
-        company: a.company,
-        date: a.date = moment(a.datetime).utc().format('YYYY-MM-DD'), //EC2
-        time: a.time = moment(a.datetime).utc().format('HH:mm:ss'), //EC2
-        // date: a.date = moment(a.datetime).utc().utcOffset('-03:00').format('YYYY-MM-DD'), // Local
-        // time: a.time = moment(a.datetime).utc().utcOffset('-03:00').format('HH:mm:ss'), // Local
+        company: a.company,       
+        date: a.date = moment(a.datetime).utc().utcOffset('-03:00').format('YYYY-MM-DD'), 
+        time: a.time = moment(a.datetime).utc().utcOffset('-03:00').format('HH:mm:ss'), 
         reserved: a.reserved,
         client: a.client,
         massotherapist: a.massotherapist,

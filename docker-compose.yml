@@ -1,26 +1,26 @@
 version: '3.7'
 
 services:
-  main:
-    container_name: main
-    build:
-      context: .
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    ports:
-      - ${SERVER_PORT}:${SERVER_PORT}
-      - 9229:9229
-      - 80:3000
-    # command: npm run start:dev
-    # command: npm run start:debug
-    command: npm run start:prod
-    env_file:
-      - .env
-    networks:
-      - webnet
-    depends_on:
-      - postgres
+  # main:
+  #   container_name: main
+  #   build:
+  #     context: .
+  #   volumes:
+  #     - .:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #   ports:
+  #     - ${SERVER_PORT}:${SERVER_PORT}
+  #     - 9229:9229
+  #     - 80:3000
+  #   # command: npm run start:dev
+  #   # command: npm run start:debug
+  #   command: npm run start:prod
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - webnet
+  #   depends_on:
+  #     - postgres
   postgres:
     container_name: postgres
     image: postgres:12
