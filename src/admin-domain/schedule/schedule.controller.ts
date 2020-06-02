@@ -2,6 +2,7 @@ import { Controller, Get, HttpCode, Post, Body, Put, Param, Delete, Query, Valid
 import { Schedule } from './schedule.entity';
 import { ScheduleService } from './schedule.service';
 import { NewScheduleDto } from './new-schedule.dto';
+import { DateValidationPipe } from 'src/date.pipe';
 
 @Controller('schedules')
 export class ScheduleController {
@@ -18,7 +19,10 @@ export class ScheduleController {
 
     @Get()
     @HttpCode(200)
-    async list(@Query('onlyAvailableTime') onlyAvailableTime, @Query('date') date, @Query('companyId', ParseIntPipe) companyId) {
+    async list(@Query('onlyAvailableTime') onlyAvailableTime, @Query('date', DateValidationPipe) date, @Query('companyId') companyId) {
+        if(!date && !companyId ) {
+            console.log('Date and CompanyId not recieved. This request will return all schedules per days per companies')
+        }
         return await this.scheduleService.list(onlyAvailableTime, date, companyId);
     }
 
