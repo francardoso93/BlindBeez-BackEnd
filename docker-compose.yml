@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
   main:
+    restart: always 
     container_name: main
     build:
       context: .
@@ -22,6 +23,7 @@ services:
     depends_on:
       - postgres
   postgres:
+    restart: always 
     container_name: postgres
     image: postgres:12
     networks:
