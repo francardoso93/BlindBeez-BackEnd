@@ -2,7 +2,8 @@ import { IsNotEmpty, IsNumber, IsEmail } from 'class-validator';
 
 export class ClientSchedulerDto {
     @IsNotEmpty()
-    scheduleId: string; // Id da schedule
+    @IsNumber()
+    scheduleId: number; // Id da schedule
 
     @IsNotEmpty()
     name: string;
