@@ -3,7 +3,7 @@ import { IsNotEmpty, IsNumber, IsEmail } from 'class-validator';
 export class ClientSchedulerDto {
     @IsNotEmpty()
     @IsNumber()
-    scheduleId: number; // Id da schedule
+    scheduleId: number;
 
     @IsNotEmpty()
     name: string;
