@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Company } from '../companies/company.entity';
+import { Schedule } from '../schedule/schedule.entity';
 
 @Entity()
 export class Client {
@@ -17,5 +18,8 @@ export class Client {
 
     @ManyToOne(() => Company, company => company.clients)
     company?: Company;
+
+    @OneToMany(() => Schedule, schedule => schedule.client)
+    schedules?: Schedule[];
 
 }

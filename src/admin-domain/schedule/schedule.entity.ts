@@ -4,7 +4,8 @@ import {
   PrimaryGeneratedColumn,
   OneToOne,
   JoinColumn,
-  ManyToOne
+  ManyToOne,
+  JoinTable
 } from 'typeorm';
 import { Massotherapist } from '../massotherapists/massotherapist.entity';
 import { Company } from '../companies/company.entity';
@@ -29,8 +30,10 @@ export class Schedule {
   @JoinColumn()
   company?: Company;
 
-  @ManyToOne(type => Client)
-  @JoinColumn()
+  @ManyToOne(type => Client, client => client.schedules ,{
+    eager: true
+  })
+  @JoinTable()
   client?: Client;
 
   @Column()

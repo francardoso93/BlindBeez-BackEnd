@@ -82,6 +82,7 @@ export class ScheduleService {
     }
     const scheduleList = await this.scheduleRepository.find(
       {
+        join: { alias: 'schedule', leftJoin: { client: 'schedule.client' } },
         where: [whereCondition],
         order: {
           datetime: 'ASC',

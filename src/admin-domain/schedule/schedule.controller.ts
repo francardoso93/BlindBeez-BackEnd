@@ -2,7 +2,7 @@ import { Controller, Get, HttpCode, Post, Body, Put, Param, Delete, Query, Valid
 import { Schedule } from './schedule.entity';
 import { ScheduleService } from './schedule.service';
 import { NewScheduleDto } from './new-schedule.dto';
-import { DateValidationPipe } from 'src/date.pipe';
+import { DateValidationPipe } from '../../date.pipe';
 
 @Controller('schedules')
 export class ScheduleController {
