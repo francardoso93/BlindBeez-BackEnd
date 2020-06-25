@@ -27,10 +27,7 @@ export class ScheduleService {
     const endDate = new Date(newSchedule.finalDate);
 
     while (currentMoment < endDate) { //Day Increment
-      while (this.getTime(moment.utc(currentMoment)) < this.getTime(moment.utc(endDate))) { //Minute Increment
-        currentMoment = moment(currentMoment)
-          .add(newSchedule.minuteInterval, 'minutes')
-          .utc().utcOffset('-03:00').toDate();
+      while (this.getTime(moment.utc(currentMoment)) < this.getTime(moment.utc(endDate))) { //Minute Increment        
         const schedule: Schedule = {
           id: 0,
           company: newSchedule.company,
@@ -38,6 +35,9 @@ export class ScheduleService {
           reserved: false,
         };
         this.save(schedule);
+        currentMoment = moment(currentMoment)
+          .add(newSchedule.minuteInterval, 'minutes')
+          .utc().utcOffset('-03:00').toDate();
       }
       currentMoment = moment(currentMoment)
         .add(1, 'days')
@@ -92,9 +92,9 @@ export class ScheduleService {
     scheduleList.map(a => {
       scheduleDtoList.push({
         id: a.id,
-        company: a.company,       
-        date: a.date = moment(a.datetime).utc().utcOffset('-03:00').format('YYYY-MM-DD'), 
-        time: a.time = moment(a.datetime).utc().utcOffset('-03:00').format('HH:mm:ss'), 
+        company: a.company,
+        date: a.date = moment(a.datetime).utc().utcOffset('-03:00').format('YYYY-MM-DD'),
+        time: a.time = moment(a.datetime).utc().utcOffset('-03:00').format('HH:mm:ss'),
         reserved: a.reserved,
         client: a.client,
         massotherapist: a.massotherapist,
