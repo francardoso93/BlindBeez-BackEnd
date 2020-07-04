@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Schedule } from './schedule.entity';
-import { Repository, DeleteResult, Like, Raw, Between } from 'typeorm';
+import { Repository, DeleteResult, Like, Raw, Between, getConnection } from 'typeorm';
 import { NewScheduleDto } from './new-schedule.dto';
 import moment = require('moment');
 import { ScheduleDto } from './schedule.dto';
@@ -17,6 +17,12 @@ export class ScheduleService {
   ) { }
 
   public async BulkCreateAvailableSchedules(newSchedule: NewScheduleDto) {
+    await this.deleteExitingSchedulesForTheInformedPeriod(newSchedule);
+
+    //   await this.scheduleRepository.remove({
+    //     reserved: true,
+    //   });
+
     const company = await this.companiesService.get(newSchedule.company?.id?.toString());
     if (!company) {
       throw new BadRequestException('CompanyId is not registered, please register company before schedule');
@@ -45,6 +51,15 @@ export class ScheduleService {
         .minutes(startDate.getMinutes())
         .utc().utcOffset('-03:00').toDate();
     }
+  }
+
+  private async deleteExitingSchedulesForTheInformedPeriod(newScheduleDto: NewScheduleDto) {
+    await getConnection()
+      .createQueryBuilder()
+      .delete()
+      .from(Schedule)
+      .where("datetime >= :initialDate", { initialDate: newScheduleDto.initialDate})
+      .execute();
   }
 
   public getTime(dateTime: Moment): Moment {
