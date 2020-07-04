@@ -59,6 +59,7 @@ export class ScheduleService {
       .delete()
       .from(Schedule)
       .where("datetime >= :initialDate", { initialDate: newScheduleDto.initialDate})
+      .andWhere("datetime < :finalDate", { finalDate: newScheduleDto.finalDate})
       .execute();
   }
 
