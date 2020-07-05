@@ -19,11 +19,11 @@ export class ScheduleController {
 
     @Get()
     @HttpCode(200)
-    async list(@Query('onlyAvailableTime') onlyAvailableTime, @Query('date', DateValidationPipe) date, @Query('companyId') companyId) {
-        if(!date && !companyId ) {
-            console.log('Date and CompanyId not recieved. This request will return all schedules per days per companies')
+    async list(@Query('onlyAvailableTime') onlyAvailableTime, @Query('initialDate', DateValidationPipe) initialDate, @Query('finalDate', DateValidationPipe) finalDate, @Query('companyId') companyId) {
+        if(!initialDate && !finalDate  && !companyId ) {
+            console.log('InitialDate, finalDate and/or CompanyId not recieved. This request will return all schedules per days per companies')
         }
-        return await this.scheduleService.list(onlyAvailableTime, date, companyId);
+        return await this.scheduleService.list(onlyAvailableTime, initialDate, finalDate, companyId);
     }
 
     @Get(':id')

@@ -76,7 +76,8 @@ export class ScheduleService {
 
   public async list(
     onlyAvailableTime: boolean,
-    date: string,
+    initialDate: string,
+    finalDate: string,
     companyId: string,
   ): Promise<ScheduleDto[]> {
 
@@ -86,10 +87,10 @@ export class ScheduleService {
     if (onlyAvailableTime) {
       whereCondition.reserved = false;
     }
-    if (date) {
+    if (initialDate && finalDate) {
       whereCondition.datetime = Between(
-        moment(date, ['DD/MM/YYYY', 'YYYY-MM-DD']).format('YYYY-MM-DD') + 'T00:00:00',
-        moment(date, ['DD/MM/YYYY', 'YYYY-MM-DD']).format('YYYY-MM-DD') + 'T23:59:59');
+        moment(initialDate, ['DD/MM/YYYY', 'YYYY-MM-DDTHH:mm:ss']).format('YYYY-MM-DDTHH:mm:ss'),
+        moment(finalDate, ['DD/MM/YYYY', 'YYYY-MM-DDTHH:mm:ss']).format('YYYY-MM-DDTHH:mm:ss'));
     }
     if (companyId) {
       whereCondition.company = {
