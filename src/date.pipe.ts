@@ -15,7 +15,7 @@ export class DateValidationPipe implements PipeTransform {
         throw new BadRequestException(
           "Invalid date format for " +
             value +
-            ". It should be formated as YYYY-MM-DD"
+            ". It should be formated as YYYY-MM-DDTHH:mm:SS"
         );
       }
       return value;
